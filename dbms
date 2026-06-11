@@ -1,0 +1,55 @@
+CREATE DATABASE dbms_practical;
+USE dbms_practical;
+
+CREATE TABLE Dept (
+    deptId INT PRIMARY KEY,
+    deptName VARCHAR(10)
+);
+
+CREATE TABLE Emp (
+    empId INT PRIMARY KEY,
+    empName VARCHAR(10),
+    empSal INT,
+    empDeptId INT,
+    FOREIGN KEY (empDeptId) REFERENCES Dept(deptId)
+);
+
+INSERT INTO Dept (deptId, deptName)
+VALUES
+(10, 'HR'),
+(20, 'Finance'),
+(30, 'IT'),
+(40, 'Sales');
+
+INSERT INTO Emp (empId, empName, empSal, empDeptId)
+VALUES
+(101, 'Amit', 12000, 10),
+(102, 'Neha', 25000, 20),
+(103, 'Raj', 18000, 30),
+(104, 'Pooja', 32000, 40),
+(105, 'Kiran', 15000, 10),
+(106, 'Arun', 28000, 30);
+
+-- 1. List employees belonging to department 30, 40, or 10
+SELECT *
+FROM Emp
+WHERE empDeptId IN (10, 30, 40);
+
+-- 2. List employee details whose salary is between 10000 and 30000
+SELECT *
+FROM Emp
+WHERE empSal BETWEEN 10000 AND 30000;
+
+-- 3. List total number of employees
+SELECT COUNT(*) AS total_employees
+FROM Emp;
+
+-- 4. List average salary of each department
+SELECT empDeptId, AVG(empSal) AS average_salary
+FROM Emp
+GROUP BY empDeptId;
+
+-- 5. List employee details in ascending order of salary
+SELECT *
+FROM Emp
+ORDER BY empSal ASC;
